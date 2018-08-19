@@ -5,12 +5,20 @@
 
 ## 创建表空间和临时表空间
 ###### linux :
-* `create tablespace A datafile '/home/data/A.dbf' size 1000m autoextend on next 50m maxsize 20480m ;`
-* `create temporary tablespace A_TEMP tempfile  '/home/data/A_TEMP.dbf' size 1000m autoextend on next 500m maxsize 20480m ; `
+```sql
+ create tablespace A datafile '/home/data/A.dbf' size 1000m autoextend on next 50m maxsize 20480m ;
+```
+```sql
+create temporary tablespace A_TEMP tempfile  '/home/data/A_TEMP.dbf' size 1000m autoextend on next 500m maxsize 20480m ;
+```
 
 ###### window:
-* `create tablespace A_DATA datafile 'D:\app\ora\A_DATA.ora' size 1000m autoextend on next 50m maxsize 20480m ;`
-* `create temporary tablespace A_TEMP tempfile  'D:\app\ora\A_TEMP.ora' size 1000m autoextend on next 500m maxsize 20480m ;`
+```sql
+create tablespace A_DATA datafile 'D:\app\ora\A_DATA.ora' size 1000m autoextend on next 50m maxsize 20480m ;
+```
+```sql
+create temporary tablespace A_TEMP tempfile  'D:\app\ora\A_TEMP.ora' size 1000m autoextend on next 500m maxsize 20480m ;
+```
 
 ###### 删除表空间
 ```sql
@@ -18,10 +26,12 @@ drop tablespace thf_ws  including contents and datafiles cascade constraints;
 ```
 
 ###### 查询表所属表空间信息：
-`select table_name ,tablespace_name from dba_tables;`
+```sql
+select table_name ,tablespace_name from dba_tables;
+```
 
 ###### 只查询表空间
-```
+```sql
 select * from dba_tablespaces
 select TABLESPACE_NAME from dba_tablespaces;
 select TABLESPACE_NAME from tablespaces;
@@ -73,15 +83,25 @@ select * from dba_directories;
 
 
 ## 导入
-1. `impdp username/password@orcl directory=backup_dump dumpfile=20180204.dmp   remap_schema=thf:thf,thfdw:thfdw logfile=A_20180204.log parallel=2 table_exists_action=replace  remap_tablespace = A : A ;`
-2. `impdp username/password@orcl directory=data_pump_dir dumpfile=20151207.dmp logfile=20151207.log  remap_schema=thf:thf table_exists_action = replace remap_tablespace = A : A ;`
-3. `impdp username/password@orcl directory=dir dumpfile=20180309.dmp logfile=impdp_fxg6_%date:~0,4%%date:~5,2%%date:~8,2%_log.txt remap_schema=fxdm:fxdm,fxAgp:fxAgp,fxdw:fxdw,fxkettle:fxkettle,fxods:fxods remap_tablespace=fxbase001:Abase001 parallel=4`
+```sql
+impdp username/password@orcl directory=backup_dump dumpfile=20180204.dmp   remap_schema=thf:thf,thfdw:thfdw logfile=A_20180204.log parallel=2 table_exists_action=replace  remap_tablespace = A : A ;
+```
+```sql
+impdp username/password@orcl directory=data_pump_dir dumpfile=20151207.dmp logfile=20151207.log  remap_schema=thf:thf table_exists_action = replace remap_tablespace = A : A ;
+```
+```sql
+impdp username/password@orcl directory=dir dumpfile=20180309.dmp logfile=impdp_fxg6_%date:~0,4%%date:~5,2%%date:~8,2%_log.txt remap_schema=fxdm:fxdm,fxAgp:fxAgp,fxdw:fxdw,fxkettle:fxkettle,fxods:fxods remap_tablespace=fxbase001:Abase001 parallel=4
+```
 
 ## 导出
-`Expdp username/password  directory=dump_dir dumpfile = ys_Agprm.dmp logfile = xxx.log schemas= username`
+```sql
+Expdp username/password  directory=dump_dir dumpfile = ys_Agprm.dmp logfile = xxx.log schemas= username
+```
 
 ###### 导入多个用户，前提是用户名不一致
-`impdp 用户名/密码@203orcl directory=hmn6 dumpfile=A20150408_2.dmp remap_schema=hncbAgp:hmAgp,hncbdw:hmdw,hncbdm:hmdm,hncbkettle:hmkettle logfile=imp_hm20150408.log parallel=2 table_exists_action=replace`
+```sql
+impdp 用户名/密码@203orcl directory=hmn6 dumpfile=A20150408_2.dmp remap_schema=hncbAgp:hmAgp,hncbdw:hmdw,hncbdm:hmdm,hncbkettle:hmkettle logfile=imp_hm20150408.log parallel=2 table_exists_action=replace
+```
 
 ###### 分多文件导出
 ```sql
