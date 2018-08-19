@@ -1,0 +1,32 @@
+wget http://download.redis.io/releases/redis-3.2.12.tar.gz
+wget http://download.redis.io/releases/redis-4.0.11.tar.gz
+http://download.redis.io/releases/redis-3.2.12.tar.gz
+github 行https://github.com/antirez/redis/releases
+scp /Users/tanghuanfei/个人文件/redis-3.2.12.tar.gz root@39.106.25.178:/usr/local/redis/redis.tar.gz
+
+tar -zxvf redis.tar.gz
+进入解压后的目录 cd redis-3.2.0
+
+sudo make test 测试编译
+****************************************************************
+hadoop@stormspark:~/workspace/redis2.6.13/src$ make test
+You need tcl 8.5 or newer in order to run the Redis test
+make: *** [test] Error 1
+
+wget http://downloads.sourceforge.net/tcl/tcl8.6.1-src.tar.gz
+sudo tar xzvf tcl8.6.1-src.tar.gz  -C /usr/local/
+cd  /usr/local/tcl8.6.1/unix/
+sudo ./configure
+sudo make
+sudo make install
+*****************************************************************
+
+进入src 安装
+cd src
+make Install
+
+启动：redis-server /usr/local/redis/redis.conf
+
+连接：redis-cli
+
+关闭：./bin/redis-cli shutdown
