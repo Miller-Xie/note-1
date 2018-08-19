@@ -13,7 +13,8 @@
 * `create temporary tablespace A_TEMP tempfile  'D:\app\ora\A_TEMP.ora' size 1000m autoextend on next 500m maxsize 20480m ;`
 
 ###### 删除表空间
-`drop tablespace thf_ws  including contents and datafiles cascade constraints;`
+```sql
+drop tablespace thf_ws  including contents and datafiles cascade constraints;```
 
 ###### 查询表所属表空间信息：
 `select table_name ,tablespace_name from dba_tables;`
@@ -25,7 +26,9 @@ select TABLESPACE_NAME from dba_tablespaces;
 select TABLESPACE_NAME from tablespaces;
 ```
 ###### 查看数据库中当前的sid name：
-`select INSTANCE_NAME from v$instance;`
+```sql
+select INSTANCE_NAME from v$instance;
+```
 
 
 ## 用户
@@ -79,8 +82,21 @@ table_exists_action=replace`
 `impdp 用户名/密码@203orcl directory=HMN6 dumpfile=A20150408_2.dmp  remap_schema=hncbAgp:hmAgp,hncbdw:hmdw,hncbdm:hmdm,hncbkettle:hmkettle logfile=imp_hm20150408.log parallel=2 table_exists_action=replace`
 
 ###### 加密导出、导入
-1. `导出：expdp  用户名/密码 directory=dir dumpfile=secooler.dmp logfile=secooler.log encryption=data_only encryption_password=my_passwd`
-2. `导入：impdp  用户名/密码 directory=dir dumpfile=secooler.dmp logfile=secooler_impdp.log encryption_password=my_passwd`
+```sql
+导出：expdp 用户名/密码
+directory = dir
+dumpfile = secooler.dmp
+logfile = secooler.log
+encryption = data_only
+encryption_password = my_passwd
+```
+```sql
+导入：impdp 用户名/密码
+directory = dir
+dumpfile = secooler.dmp
+logfile = secooler_impdp.log
+encryption_password = my_passwd
+```
 
 ###### 远程导出到本地
 > network_link为连接远程的databaselink
@@ -94,10 +110,17 @@ table_exists_action=replace`
 
 
 ###### 查询死锁
-`select username,lockwait,status,machine ,program from v$session where sid in (select session_id from v$locked_object);`
+```sql
+SELECT username, lockwait, status, machine, program
+FROM v$session
+WHERE sid IN (
+	SELECT session_id
+	FROM v$locked_object
+);
+```
 
 ###### 创建dblink
-```
+```sql
 drop database link DW_LINK;
 create database link DW_LINK
   connect to yldw IDENTIFIED yldw
@@ -112,23 +135,54 @@ create database link DW_LINK
           ))';
 ```
 ###### 查询所有表名：
-`select t.table_name from user_tables t;`
+```sql
+select t.table_name from user_tables t;
+```
 ###### 查询所有字段名：
-`select t.column_name from user_col_comments t;`
+```sql
+select t.column_name
+from user_col_comments t;
+```
 ###### 查询指定表的所有字段名：
-`select t.column_name from user_col_comments t where t.table_name = 'BIZ_DICT_XB';`
+```sql
+SELECT t.column_name
+FROM user_col_comments t
+WHERE t.table_name = 'BIZ_DICT_XB';
+```
 ###### 查询指定表的所有字段名和字段说明：
-`select t.column_name, t.column_name from user_col_comments t where t.table_name = 'BIZ_DICT_XB';`
+```sql
+SELECT t.column_name, t.column_name
+FROM user_col_comments t
+WHERE t.table_name = 'BIZ_DICT_XB';
+```
 ###### 查询所有表的表名和表说明：
-`select t.table_name,f.comments from user_tables t inner join user_tab_comments f on t.table_name = f.table_name;`
+```sql
+SELECT t.table_name, f.comments
+FROM user_tables t
+	INNER JOIN user_tab_comments f ON t.table_name = f.table_name ;
+```
 ###### 查询模糊表名的表名和表说明：
-* `select t.table_name from user_tables t where t.table_name like 'BIZ_DICT%';`
-* `select t.table_name,f.comments from user_tables t inner join user_tab_comments f on t.table_name = f.table_name where t.table_name like 'BIZ_DICT%';`
+```sql
+SELECT t.table_name
+FROM user_tables t
+WHERE t.table_name LIKE 'BIZ_DICT%';
+```
+```sql
+SELECT t.table_name, f.comments
+FROM user_tables t
+	INNER JOIN user_tab_comments f ON t.table_name = f.table_name
+WHERE t.table_name LIKE 'BIZ_DICT%';
+```
 
 ###### 查询表的数据条数、表名、中文表名
-`select a.num_rows, a.TABLE_NAME, b.COMMENTS from user_tables a, user_tab_comments b WHERE a.TABLE_NAME = b.TABLE_NAME order by TABLE_NAME;`
-###### 查询表空间
+```sql
+SELECT a.num_rows, a.TABLE_NAME, b.COMMENTS
+FROM user_tables a, user_tab_comments b
+WHERE a.TABLE_NAME = b.TABLE_NAME
+ORDER BY TABLE_NAME
 ```
+###### 查询表空间
+```sql
 select b.file_id 文件ID号,
        b.tablespace_name 表空间名,
        b.bytes / 1024 / 1024 / 1024 || 'G' 字节数,
