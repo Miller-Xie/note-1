@@ -35,27 +35,41 @@ select INSTANCE_NAME from v$instance;
 
 ## 用户
 ###### 创建用户
-`create user username identified by password default tablespace A_data temporary tablespace A_temp;`
+```sql
+create user username identified by password default tablespace A_data temporary tablespace A_temp;
+```
 
 ###### 查询oracle用户
-`select username from dba_users order  by username;`
+```sql
+select username from dba_users order  by username;
+```
 
 ###### 重置用户密码：
-`alter user username identified by 11111111;`
+```sql
+alter user username identified by 11111111;
+```
 
 ###### 删除用户
-`drop user username cascade`
+```sql
+drop user username cascade
+```
 
 ###### 给用户授权
-`grant connect,resource,dba to username;`
+```sql
+grant connect,resource,dba to username;
+```
 
 
 ## directory
 ###### 创建directory，导入导出的时候用
-`create directory dump_dir as '/u01/app/dbback';`
+```sql
+create directory dump_dir as '/u01/app/dbback';
+```
 
 ###### 查询directory
-`select * from dba_directories;`
+```sql
+select * from dba_directories;
+```
 
 
 ## 导入
@@ -70,18 +84,26 @@ select INSTANCE_NAME from v$instance;
 `impdp 用户名/密码@203orcl directory=hmn6 dumpfile=A20150408_2.dmp remap_schema=hncbAgp:hmAgp,hncbdw:hmdw,hncbdm:hmdm,hncbkettle:hmkettle logfile=imp_hm20150408.log parallel=2 table_exists_action=replace`
 
 ###### 分多文件导出
-`expdp username/password dumpfile=hm%U.dmp logfile=hm.log parallel=2`
+```sql
+expdp username/password dumpfile=hm%U.dmp logfile=hm.log parallel=2
+```
  > %U可以指定导出线程数 个文件，此处parallel=2,导出的文件是2个
 
 ###### 导入多个文件，增加逗号即可,前提是用户名一致
-`impdp hmn6/hmn6@203orcl directory=hmn6 dumpfile=hmcw1.dmp,hmcw2.dmp parallel=2 remap_schema=hmcw:hmn6 table_exists_action=replace`
+```sql
+impdp hmn6/hmn6@203orcl directory=hmn6 dumpfile=hmcw1.dmp,hmcw2.dmp parallel=2 remap_schema=hmcw:hmn6 table_exists_action=replace
+```
 
 ###### 导出多个用户
-`impdp 用户名/密码@203orcl directory=HMN6 dumpfile=A20150408_2.dmp  schemas=a,b,c logfile=imp_hm20150408.log parallel=2
-table_exists_action=replace`
+```sql
+impdp 用户名/密码@203orcl directory=HMN6 dumpfile=A20150408_2.dmp  schemas=a,b,c logfile=imp_hm20150408.log parallel=2
+table_exists_action=replace
+```
 
 ###### 导入多个用户，前提是用户名不一致
-`impdp 用户名/密码@203orcl directory=HMN6 dumpfile=A20150408_2.dmp  remap_schema=hncbAgp:hmAgp,hncbdw:hmdw,hncbdm:hmdm,hncbkettle:hmkettle logfile=imp_hm20150408.log parallel=2 table_exists_action=replace`
+```sql
+impdp 用户名/密码@203orcl directory=HMN6 dumpfile=A20150408_2.dmp  remap_schema=hncbAgp:hmAgp,hncbdw:hmdw,hncbdm:hmdm,hncbkettle:hmkettle logfile=imp_hm20150408.log parallel=2 table_exists_action=replace
+```
 
 ###### 加密导出、导入
 ```sql
@@ -103,7 +125,9 @@ encryption_password = my_passwd
 ###### 远程导出到本地
 > network_link为连接远程的databaselink
 
-    expdp user/pwd@orcl directory=dd network_link=dblink dumpfile=fileName.dmp
+```sql
+expdp user/pwd@orcl directory=dd network_link=dblink dumpfile=fileName.dmp
+```
 > remap_schema当你从A用户导出的数据，想要导入到B用户中去，就使用这个：remap_schema=A:B
 
 > remap_tablespace 与上面类似，数据库对象本来存在于tbs_a表空间，现在你不想放那儿了，想换到tbs_b，就用这个remap_tablespace=tbs_a:tbs_b 结果是所有tbs_a中的对象都会建在tbs_b表空间中。这样做的前提是目标用户B和目标表空间tbs_b存在
