@@ -14,7 +14,8 @@
 
 ###### 删除表空间
 ```sql
-drop tablespace thf_ws  including contents and datafiles cascade constraints;```
+drop tablespace thf_ws  including contents and datafiles cascade constraints;
+```
 
 ###### 查询表所属表空间信息：
 `select table_name ,tablespace_name from dba_tables;`
@@ -26,6 +27,7 @@ select TABLESPACE_NAME from dba_tablespaces;
 select TABLESPACE_NAME from tablespaces;
 ```
 ###### 查看数据库中当前的sid name：
+
 ```sql
 select INSTANCE_NAME from v$instance;
 ```
