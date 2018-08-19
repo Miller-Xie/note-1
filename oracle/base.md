@@ -82,10 +82,12 @@ table_exists_action=replace`
 1. `导出：expdp  用户名/密码 directory=dir dumpfile=secooler.dmp logfile=secooler.log encryption=data_only encryption_password=my_passwd`
 2. `导入：impdp  用户名/密码 directory=dir dumpfile=secooler.dmp logfile=secooler_impdp.log encryption_password=my_passwd`
 
-###### 远程导出到到本
-* network_link为连接远程的databaselink
+###### 远程导出到本地
+> network_link为连接远程的databaselink
+
 `expdp user/pwd@orcl directory=dd network_link=dblink dumpfile=fileName.dmp`
 > remap_schema当你从A用户导出的数据，想要导入到B用户中去，就使用这个：remap_schema=A:B
+
 > remap_tablespace 与上面类似，数据库对象本来存在于tbs_a表空间，现在你不想放那儿了，想换到tbs_b，就用这个remap_tablespace=tbs_a:tbs_b 结果是所有tbs_a中的对象都会建在tbs_b表空间中。这样做的前提是目标用户B和目标表空间tbs_b存在
 
 
@@ -122,6 +124,7 @@ create database link DW_LINK
 ###### 查询模糊表名的表名和表说明：
 * `select t.table_name from user_tables t where t.table_name like 'BIZ_DICT%';`
 * `select t.table_name,f.comments from user_tables t inner join user_tab_comments f on t.table_name = f.table_name where t.table_name like 'BIZ_DICT%';`
+
 ###### 查询表的数据条数、表名、中文表名
 `select a.num_rows, a.TABLE_NAME, b.COMMENTS from user_tables a, user_tab_comments b WHERE a.TABLE_NAME = b.TABLE_NAME order by TABLE_NAME;`
 ###### 查询表空间
