@@ -85,7 +85,7 @@ table_exists_action=replace`
 ###### 远程导出到本地
 > network_link为连接远程的databaselink
 
-`expdp user/pwd@orcl directory=dd network_link=dblink dumpfile=fileName.dmp`
+    expdp user/pwd@orcl directory=dd network_link=dblink dumpfile=fileName.dmp
 > remap_schema当你从A用户导出的数据，想要导入到B用户中去，就使用这个：remap_schema=A:B
 
 > remap_tablespace 与上面类似，数据库对象本来存在于tbs_a表空间，现在你不想放那儿了，想换到tbs_b，就用这个remap_tablespace=tbs_a:tbs_b 结果是所有tbs_a中的对象都会建在tbs_b表空间中。这样做的前提是目标用户B和目标表空间tbs_b存在
