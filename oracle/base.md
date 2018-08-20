@@ -84,23 +84,51 @@ select * from dba_directories;
 
 ## 导入
 ```sql
-impdp username/password@orcl directory=backup_dump dumpfile=20180204.dmp   remap_schema=thf:thf,thfdw:thfdw logfile=A_20180204.log parallel=2 table_exists_action=replace  remap_tablespace = A : A ;
+impdp username/password@orcl
+directory=backup_dump
+dumpfile=20180204.dmp
+remap_schema=thf:thf,thfdw:thfdw
+logfile=A_20180204.log parallel=2
+table_exists_action=replace
+remap_tablespace = A : A ;
 ```
 ```sql
-impdp username/password@orcl directory=data_pump_dir dumpfile=20151207.dmp logfile=20151207.log  remap_schema=thf:thf table_exists_action = replace remap_tablespace = A : A ;
+impdp username/password@orcl
+directory=data_pump_dir
+dumpfile=20151207.dmp
+logfile=20151207.log  
+remap_schema=thf:thf
+table_exists_action = replace
+remap_tablespace = A : A ;
 ```
 ```sql
-impdp username/password@orcl directory=dir dumpfile=20180309.dmp logfile=impdp_fxg6_%date:~0,4%%date:~5,2%%date:~8,2%_log.txt remap_schema=fxdm:fxdm,fxAgp:fxAgp,fxdw:fxdw,fxkettle:fxkettle,fxods:fxods remap_tablespace=fxbase001:Abase001 parallel=4
+impdp username/password@orcl
+directory=dir
+dumpfile=20180309.dmp
+logfile=impdp_fxg6_%date:~0,4%%date:~5,2%%date:~8,2%_log.txt
+remap_schema=fxdm:fxdm,fxAgp:fxAgp,fxdw:fxdw,fxkettle:fxkettle,fxods:fxods
+remap_tablespace=fxbase001:Abase001
+parallel=4
 ```
 
 ## 导出
 ```sql
-Expdp username/password  directory=dump_dir dumpfile = ys_Agprm.dmp logfile = xxx.log schemas= username
+Expdp username/password  
+directory=dump_dir
+dumpfile = ys_Agprm.dmp
+logfile = xxx.log
+schemas= username
 ```
 
 ###### 导入多个用户，前提是用户名不一致
 ```sql
-impdp 用户名/密码@203orcl directory=hmn6 dumpfile=A20150408_2.dmp remap_schema=hncbAgp:hmAgp,hncbdw:hmdw,hncbdm:hmdm,hncbkettle:hmkettle logfile=imp_hm20150408.log parallel=2 table_exists_action=replace
+impdp 用户名/密码@203orcl
+directory=hmn6
+dumpfile=A20150408_2.dmp
+remap_schema=hncbAgp:hmAgp,hncbdw:hmdw,hncbdm:hmdm,hncbkettle:hmkettle
+logfile=imp_hm20150408.log
+parallel=2
+table_exists_action=replace
 ```
 
 ###### 分多文件导出
@@ -111,18 +139,34 @@ expdp username/password dumpfile=hm%U.dmp logfile=hm.log parallel=2
 
 ###### 导入多个文件，增加逗号即可,前提是用户名一致
 ```sql
-impdp hmn6/hmn6@203orcl directory=hmn6 dumpfile=hmcw1.dmp,hmcw2.dmp parallel=2 remap_schema=hmcw:hmn6 table_exists_action=replace
+impdp hmn6/hmn6@203orcl
+directory=hmn6
+dumpfile=hmcw1.dmp,hmcw2.dmp
+parallel=2
+remap_schema=hmcw:hmn6
+table_exists_action=replace
 ```
 
 ###### 导出多个用户
 ```sql
-impdp 用户名/密码@203orcl directory=HMN6 dumpfile=A20150408_2.dmp  schemas=a,b,c logfile=imp_hm20150408.log parallel=2
+impdp 用户名/密码@203orcl
+directory=HMN6
+dumpfile=A20150408_2.dmp  
+schemas=a,b,c
+logfile=imp_hm20150408.log
+parallel=2
 table_exists_action=replace
 ```
 
 ###### 导入多个用户，前提是用户名不一致
 ```sql
-impdp 用户名/密码@203orcl directory=HMN6 dumpfile=A20150408_2.dmp  remap_schema=hncbAgp:hmAgp,hncbdw:hmdw,hncbdm:hmdm,hncbkettle:hmkettle logfile=imp_hm20150408.log parallel=2 table_exists_action=replace
+impdp 用户名/密码@203orcl
+directory=HMN6
+dumpfile=A20150408_2.dmp  
+remap_schema=hncbAgp:hmAgp,hncbdw:hmdw,hncbdm:hmdm,hncbkettle:hmkettle
+logfile=imp_hm20150408.log
+parallel=2
+table_exists_action=replace
 ```
 
 ###### 加密导出、导入
