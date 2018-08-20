@@ -6,12 +6,11 @@
 ## 创建表空间和临时表空间
 ###### linux :
 ```sql
- create tablespace A datafile '/home/data/A.dbf' size 1000m autoextend on next 50m maxsize 20480m ;
+create tablespace A datafile '/home/data/A.dbf' size 1000m autoextend on next 50m maxsize 20480m ;
 ```
 ```sql
 create temporary tablespace A_TEMP tempfile  '/home/data/A_TEMP.dbf' size 1000m autoextend on next 500m maxsize 20480m ;
 ```
-
 ###### window:
 ```sql
 create tablespace A_DATA datafile 'D:\app\ora\A_DATA.ora' size 1000m autoextend on next 50m maxsize 20480m ;
@@ -83,6 +82,11 @@ select * from dba_directories;
 
 
 ## 导入
+> remap_schema当你从A用户导出的数据，想要导入到B用户中去，就使用这个：remap_schema=A:B
+
+> remap_tablespace 与上面类似，数据库对象本来存在于tbs_a表空间，现在你不想放那儿了，想换到tbs_b，就用这个remap_tablespace=tbs_a:tbs_b 结果是所有tbs_a中的对象都会建在tbs_b表空间中。这样做的前提是目标用户B和目标表空间tbs_b存在
+
+
 ```sql
 impdp username/password@orcl
 directory=backup_dump
@@ -192,9 +196,6 @@ encryption_password = my_passwd
 ```sql
 expdp user/pwd@orcl directory=dd network_link=dblink dumpfile=fileName.dmp
 ```
-> remap_schema当你从A用户导出的数据，想要导入到B用户中去，就使用这个：remap_schema=A:B
-
-> remap_tablespace 与上面类似，数据库对象本来存在于tbs_a表空间，现在你不想放那儿了，想换到tbs_b，就用这个remap_tablespace=tbs_a:tbs_b 结果是所有tbs_a中的对象都会建在tbs_b表空间中。这样做的前提是目标用户B和目标表空间tbs_b存在
 
 
 
