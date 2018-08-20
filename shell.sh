@@ -2,4 +2,4 @@
 git add ./
 read commitString
 git commit -m commitString
-git push origin master
+git push note master
