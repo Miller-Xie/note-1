@@ -1,6 +1,6 @@
 ### jQuery中$.fn的用法
 
-$.fn是指jquery的命名空间，加上fn上的方法及属性，会对jquery实例每一个有效。 如扩展$.fn.abc(),即**$.fn.abc()**是对jquery扩展了一个abc方法,那么后面你的每一个jquery实例都可以引用这个方法了. 那么你可以这样子：**$("#div").abc();**
+$.fn是指jquery的命名空间，加上fn上的方法及属性，会对jquery实例每一个有效。 如扩展$.fn.abc(),即**$.fn.abc()是对jquery扩展了一个abc方法,那么后面你的每一个jquery实例都可以引用这个方法了：$("#div").abc();**
 
 * $.fn.function用于添加单个方法  
 * $.fn.extend 用于添加多个方法  
