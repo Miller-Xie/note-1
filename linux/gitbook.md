@@ -28,3 +28,8 @@ ssh -T git@github.com
 
 5. gitbook init
 6. book.json
+
+7. gitbook serve --port 80
+
+fuser -n tcp 4000
+kill -9 17126
