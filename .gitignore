@@ -10,7 +10,8 @@
 .springBeans
 .sts4-cache
 命令
-
+/_book/
+/node_modules/
 ### IntelliJ IDEA ###
 .idea
 *.iws
