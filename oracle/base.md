@@ -212,14 +212,14 @@ WHERE sid IN (
 
 ###### 创建dblink
 ```sql
-drop database link DW_LINK;
-create database link DW_LINK
-  connect to yldw IDENTIFIED yldw
+drop database link LINK;
+create database link LINK
+  connect to dw IDENTIFIED dw
   using '(DESCRIPTION =
            (ADDRESS_LIST =
                (ADDRESS =
                   (PROTOCOL = TCP)
-                  (HOST = 172.30.82.25)
+                  (HOST = 172.0.0.1)
                   (PORT = 1521)) )
                (CONNECT_DATA =
                    (SERVICE_NAME = thfdb)
